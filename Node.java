@@ -9,16 +9,28 @@ public class Node {
 	private Node m_parent;
 	private Node m_rightNode;
 	private Node m_leftNode;
-
-	public Node(String data) {
+	private NodeType m_type;
+	
+	public Node(String data, NodeType type) {
 		m_data = data;
+		m_type = type;
 	}
 
 	public Node getRightNode() {
 
 		return m_rightNode;
 	}
+	
+	public void setNodeType(NodeType type)
+	{
+		m_type = type;
+	}
 
+	public NodeType getNodeType()
+	{
+		return m_type;
+	}
+	
 	public void setRightNode(Node node) {
 		m_rightNode = node;
 	}

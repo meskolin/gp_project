@@ -2,6 +2,7 @@ package gp_project;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class FunctionEvaluator {
@@ -13,7 +14,7 @@ public class FunctionEvaluator {
 		
 		for (String nodeValue : postOrderList)
 		{
-			if (isInteger(nodeValue)) //is operator
+			if (isInteger(nodeValue))
 			{
 				st.push(Integer.parseInt(nodeValue));
 			}
@@ -49,9 +50,23 @@ public class FunctionEvaluator {
 	
 	public Integer evaluateFunction(Tree tree, int xValue)
 	{	
-		//List<String> postOrderList = getPostOrderList(tree);
-		List<String> postOrderListTmp = Arrays.asList("3","2","*","6","2","/","+");
-		return evaluate(postOrderListTmp, xValue);
+		List<String> postOrderList = new ArrayList<String>();
+		getPostOrderList(tree.getRootNode(),postOrderList);
+		
+		System.out.println("evaluateFunction");
+		System.out.println(Arrays.toString(postOrderList.toArray()));
+		
+		return evaluate(postOrderList, xValue);
+	}
+	
+	private void getPostOrderList(Node node, List<String> list)
+	{
+		  if(node == null) return;
+		  
+		  getPostOrderList( node.getLeftNode(),list);
+		  getPostOrderList( node.getRightNode(),list); 
+
+		  list.add(node.getData()); 
 	}
 
 	public static boolean isInteger(String str) {

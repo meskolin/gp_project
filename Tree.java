@@ -9,7 +9,7 @@ public class Tree {
 	private Node m_rootNode;
 
 	public Tree(String rootData) {
-		m_rootNode = new Node(rootData);
+		m_rootNode = new Node(rootData, NodeType.OPERATOR);
 	}
 
 	public void printTree() {

@@ -20,13 +20,13 @@ public class FunctionGenerator {
 		}
 
 		if (currentD == maxD) {
-			node.setRightNode(new Node(config.getRandOperand()));
-			node.setLeftNode(new Node(config.getRandOperand()));
+			node.setRightNode(new Node(config.getRandOperand(), NodeType.OPERAND));
+			node.setLeftNode(new Node(config.getRandOperand(), NodeType.OPERAND));
 			return;
 		} else {
 
-			node.setRightNode(new Node(config.getRandOperator()));
-			node.setLeftNode(new Node(config.getRandOperator()));
+			node.setRightNode(new Node(config.getRandOperator(), NodeType.OPERATOR));
+			node.setLeftNode(new Node(config.getRandOperator(),NodeType.OPERATOR));
 		}
 
 		addChildrenFullMethod(node.getRightNode(), currentD + 1, maxD);

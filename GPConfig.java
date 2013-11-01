@@ -14,7 +14,6 @@ public class GPConfig {
 	private Random m_rnd;
 	
 	protected GPConfig() {
-		// Exists only to defeat instantiation.
 		 m_rnd = new Random(System.currentTimeMillis());
 	}
 
@@ -26,9 +25,6 @@ public class GPConfig {
 	}
 
 	public String getRandOperator() {
-	
-	
-		
 		if (m_rnd != null) {
 			
 			// todo read this in
@@ -50,13 +46,16 @@ public class GPConfig {
 	}
 
 	public String getRandOperand() {
-		System.out.println("---------getRandOperand---------\n");
-
 		// todo read this in
 
 		List<String> operands = Arrays.asList("0", "1", "2", "3");
 		int numoperands = operands.size();
 		int index = m_rnd.nextInt(numoperands - 1);
+		
+		if (index < 0 || index >= numoperands) {
+			throw new IllegalArgumentException("INVALID");
+		}
+		
 		return operands.get(index);
 	}
 }
