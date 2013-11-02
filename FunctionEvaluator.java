@@ -18,6 +18,10 @@ public class FunctionEvaluator {
 			{
 				st.push(Integer.parseInt(nodeValue));
 			}
+			else if (isVariable(nodeValue))
+			{
+				st.push(xValue);
+			}
 			else 
 			{
 				int num1 =  st.pop();
@@ -31,7 +35,7 @@ public class FunctionEvaluator {
 				case MULTIPLY:
 					st.push(num1 * num2);
 					break;
-				case DIVIDE:
+				case DIVIDE: //todo error check for divide by zero
 					st.push(num1 / num2);
 					break;
 				case SUBTRACT:
@@ -91,6 +95,12 @@ public class FunctionEvaluator {
 			}
 		}
 		return true;
+	}
+	
+	public static boolean isVariable(String str) {
+		
+		return str.equals("x");
+		
 	}
 	
 	public static OperatorType getOperator(String str) {
