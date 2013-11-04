@@ -25,12 +25,36 @@ public class GPConfig {
 		}
 		return instance;
 	}
+	
+	public Random getRand()
+	{
+		return m_rnd;		
+	}
 
+	public int getSizePopulation()
+	{
+		//todo read from config
+		return 30;
+		
+	}
+	
+	public double getMutatePercent()
+	{
+		double mutatePercent = 0.5; //todo read from config
+		return mutatePercent; 
+	}
+	
+	public double getCrossoverPercent()
+	{
+		double crossPercent = 0.5; //todo read from config
+		return crossPercent; 
+	}
+	
 	public String getRandOperator() {
 		if (m_rnd != null) {
 			
 			// todo read this in
-			List<String> operators = Arrays.asList("+", "-", "/", "*");
+			List<String> operators = Arrays.asList("-", "/", "*");
 			int numOperators = operators.size();
 	
 			int index = m_rnd.nextInt(numOperators - 1);
@@ -50,9 +74,9 @@ public class GPConfig {
 	public String getRandOperand() {
 		// todo read this in
 
-		List<String> operands = Arrays.asList("1", "2", "x", "3");
+		List<String> operands = Arrays.asList("1", "2", "x");
 		int numoperands = operands.size();
-		int index = m_rnd.nextInt(numoperands - 1);
+		int index = m_rnd.nextInt(numoperands);
 		
 		if (index < 0 || index >= numoperands) {
 			throw new IllegalArgumentException("INVALID");
@@ -69,14 +93,14 @@ public class GPConfig {
 		
 		try
 		{
-			  System.out.println("Working Directory = " +
-		              System.getProperty("user.dir"));
+			//Print out for debugging in case we can't find the training data file
+			//  System.out.println("Working Directory = " +
+		    //          System.getProperty("user.dir"));
 			BufferedReader reader = new BufferedReader(new FileReader("data.txt"));
 			
 			
 			while ((line = reader.readLine()) != null) 
 			{
-				System.out.println(line);
 				TrainingDataPair pair = new TrainingDataPair();
 				String[] parts = line.split("\\s");
 				if(parts.length != 2)

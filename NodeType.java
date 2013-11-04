@@ -3,5 +3,5 @@ package gp_project;
 
 
 public enum NodeType {
-    OPERATOR, OPERAND 
+    UNKNOWN, OPERATOR, OPERAND 
 }

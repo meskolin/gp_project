@@ -11,6 +11,14 @@ public class Node {
 	private Node m_leftNode;
 	private NodeType m_type;
 	
+	public Node(Node other)
+	{
+		this.m_type = other.getNodeType();
+		this.m_data = other.getData();
+		this.m_rightNode = other.getRightNode();
+		this.m_leftNode = other.getLeftNode();
+	}
+	
 	public Node(String data, NodeType type) {
 		m_data = data;
 		m_type = type;

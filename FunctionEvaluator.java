@@ -1,13 +1,16 @@
 package gp_project;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Stack;
 
 public class FunctionEvaluator {
 	
-	public Integer evaluate(List<String> postOrderList, int xValue)
+	private Tree m_bestFit;
+	
+	public boolean evaluate(List<String> postOrderList, int xValue, double yvalueOUT)
 	{
 		
 		Stack<Integer> st = new Stack<Integer>();
@@ -35,7 +38,11 @@ public class FunctionEvaluator {
 				case MULTIPLY:
 					st.push(num1 * num2);
 					break;
-				case DIVIDE: //todo error check for divide by zero
+				case DIVIDE:
+					if(num2 == 0)
+					{
+						return false;
+					}
 					st.push(num1 / num2);
 					break;
 				case SUBTRACT:
@@ -48,22 +55,70 @@ public class FunctionEvaluator {
 			}
 		}
 		
-		
-		return st.pop();
+		yvalueOUT = st.pop();
+		return true;
 	}
 	
-	public Integer evaluateFunction(Tree tree, int xValue)
+	//return true to continue, false if tree is found
+	public boolean evaluatePop(Population pop)
+	{
+		FunctionCompare comp = new FunctionCompare();
+		double fitness = -1;
+		boolean isValid = true;
+		
+		List<Tree> list= pop.getTrees();
+		for (Iterator<Tree> iter = list.iterator(); iter.hasNext(); )
+		{
+			Tree func = iter.next();
+			isValid = comp.getFitnessValue(func, fitness);
+			if(isValid)
+			{
+				if (fitness == 0)
+				{
+					System.out.println("----Found best fit tree--------");
+					func.printTree();
+					m_bestFit = func;
+					return false;
+				}	
+			}
+			else
+			{
+				iter.remove();
+			}
+			
+		}
+		return true;
+		
+	}
+	
+	/* Todo not sure we need this. Maybe will just check for validity while doing evaluation
+	public void discardInvalid(Population pop)
+	{
+		List<Tree> list= pop.getTrees();
+		
+		for (Iterator<Tree> iter = list.iterator(); iter.hasNext(); ) {
+		    Tree tree = iter.next();
+		    
+		    if(!validateTree(tree))
+		    {
+		    	iter.remove();
+		    }
+		}
+	}*/
+	
+	public boolean evaluateFunction(Tree tree, int xValue, double yValueOUT)
 	{	
 		List<String> postOrderList = new ArrayList<String>();
 		getPostOrderList(tree.getRootNode(),postOrderList);
 		
-		System.out.println("evaluateFunction");
-		System.out.println(Arrays.toString(postOrderList.toArray()));
+		//System.out.println("evaluateFunction");
+		//System.out.println(Arrays.toString(postOrderList.toArray()));
 		
-		return evaluate(postOrderList, xValue);
+		 return evaluate(postOrderList, xValue, yValueOUT); 
+		
 	}
 	
-	private void getPostOrderList(Node node, List<String> list)
+	void getPostOrderList(Node node, List<String> list)
 	{
 		  if(node == null) return;
 		  
@@ -73,6 +128,16 @@ public class FunctionEvaluator {
 		  list.add(node.getData()); 
 	}
 
+	public void getPostOrderNodeList(Node node, List<Node> list)
+	{
+		  if(node == null) return;
+		  
+		  getPostOrderNodeList( node.getLeftNode(),list);
+		  getPostOrderNodeList( node.getRightNode(),list); 
+
+		  list.add(node); 
+	}
+	
 	public static boolean isInteger(String str) {
 		if (str == null) {
 			return false;

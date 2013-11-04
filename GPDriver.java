@@ -1,5 +1,6 @@
 package gp_project;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.*;
 import java.util.List;
@@ -7,23 +8,47 @@ import java.util.List;
 public class GPDriver {
 
 	public static void main(String[] Args) {
-		System.out.println("generating functions");
-		FunctionGenerator fGen = new FunctionGenerator();
-		Tree tree = fGen.GenerateFullTree(2);
-		tree.printTree();
-
+		
+	
+		Population pop = new Population();
+		pop.generateFirstPopulation();
+		
+		/* Pseudocode
+		while(!Found)
+		{
+			pop.mutateSome();
+			pop.crossoverSome();
+			eval.evaluateFitness(pop);
+			if eval.getBestFitness() < desiredValue
+			{
+				found = true;
+				print bestTree
+			}
+			
+		}*/
+		
+		
 		FunctionEvaluator fEval = new FunctionEvaluator();
-		int result = fEval.evaluateFunction(tree, 2);
-		System.out.println("result of eval:");
-		System.out.println(result);
-		GPConfig config = GPConfig.getInstance();
-		List<TrainingDataPair> list = config.getTrainingData();
-		System.out.println(Arrays.toString(list.toArray()));
-		System.out.println("fitness value:");
+		FunctionModifier modifier = new FunctionModifier();
 		
+		int numGenerations = 0;
 		
-		FunctionCompare comp = new FunctionCompare();
-		System.out.println(comp.getFitnessValue(tree));
+		while(fEval.evaluatePop(pop) && numGenerations < 50)
+		{
+			System.out.println("num generation:" + numGenerations);
+			modifier.mutatePop(pop);
+			numGenerations ++;
+		}
+	
+		List<Tree> list = pop.getTrees();
+		for (Tree t : list)
+		{
+			List<String> postOrderList = new ArrayList<String>();
+			fEval.getPostOrderList(t.getRootNode(),postOrderList);
+			System.out.println(Arrays.toString(postOrderList.toArray()));
+			
+		}
+		
 	}
 
 }
