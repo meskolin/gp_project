@@ -4,15 +4,15 @@ import java.util.List;
 
 public class FunctionCompare {
 	
-	boolean getFitnessValue(Tree tree, double fitness)
+	FitnessResult getFitnessValue(Tree tree)
 	{
+		FitnessResult result = new FitnessResult();
 		GPConfig config = GPConfig.getInstance();
 		List<TrainingDataPair> tdList = config.getTrainingData();
 		/*
 		for each point in training data, evaluate function at that point and find the difference. Sum the differences to get the overall fitness
 		*/ 
-		fitness = 0;
-		boolean isValid;
+		double fitness = 0;
 		
 		
 		/*
@@ -22,16 +22,17 @@ public class FunctionCompare {
 		for (TrainingDataPair pair : tdList)
 		{	
 				FunctionEvaluator eval = new FunctionEvaluator();
-				double funcYValue = 0;
-				isValid = eval.evaluateFunction(tree, pair.getxValue(), funcYValue);
-				if(!isValid)
+				EvaluationResult evalResult = eval.evaluateFunction(tree, pair.getxValue());
+				if(!evalResult.isValid)
 				{
-					return false;
+					result.isValid = false;
 				}
-				double diff = Math.abs(funcYValue - pair.getyValue());
+				double diff = Math.abs(evalResult.yValue - pair.getyValue());
 				fitness += diff;
 		}
+
+		result.fitnessValue = fitness;
 		
-		return true;
+		return result;
 	}
 }

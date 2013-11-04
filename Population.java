@@ -10,13 +10,49 @@ public class Population {
 	public void generateFirstPopulation()
 	{
 		int numIndividuals = GPConfig.getInstance().getSizePopulation();
-		for (int i=0; i< numIndividuals; i++)
+		FunctionGenerator fGen = new FunctionGenerator();
+		
+		//Generate half the population using Full method
+		for (int i=0; i< numIndividuals/2; i++)
 		{
-			FunctionGenerator fGen = new FunctionGenerator();
-			Tree tree = fGen.GenerateFullTree(2);
+			Tree tree = fGen.GenerateFullTree(GPConfig.getInstance().getMaxDepth());
+			m_functions.add(tree);	
+		}
+		
+		//Generate half the population using Grow method
+		for (int i=0; i< numIndividuals/2; i++)
+		{	
+			Tree tree = fGen.GenerateGrowTree(GPConfig.getInstance().getMaxDepth());
 			m_functions.add(tree);
 			
 		}
+		
+		
+	}
+	
+	public void regenerate()
+	{
+		FunctionGenerator fGen = new FunctionGenerator();
+		
+		int desiredSize = GPConfig.getInstance().getSizePopulation();
+		int currentSize = m_functions.size();
+		int numToGenerate = desiredSize-currentSize;
+		
+		//Generate half the population using Full method
+		for (int i=0; i< numToGenerate/2; i++)
+		{
+			Tree tree = fGen.GenerateFullTree(GPConfig.getInstance().getMaxDepth());
+			m_functions.add(tree);	
+		}
+		
+		//Generate half the population using Grow method
+		for (int i=0; i< numToGenerate/2; i++)
+		{	
+			Tree tree = fGen.GenerateGrowTree(GPConfig.getInstance().getMaxDepth());
+			m_functions.add(tree);
+			
+		}
+		
 		
 	}
 	

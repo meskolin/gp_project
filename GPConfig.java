@@ -31,6 +31,11 @@ public class GPConfig {
 		return m_rnd;		
 	}
 
+	public int getMaxDepth()
+	{
+		return 1;
+	}
+	
 	public int getSizePopulation()
 	{
 		//todo read from config
@@ -85,6 +90,20 @@ public class GPConfig {
 		return operands.get(index);
 	}
 	
+	public String getRandOperatorOrOperand()
+	{
+		
+		int flipCoin = m_rnd.nextInt(2);
+		if (flipCoin == 1)
+		{
+			return getRandOperand();
+		}
+		else
+		{
+			return getRandOperator();
+		}
+	}
+	
 	List<TrainingDataPair> getTrainingData()
 	{
 		
@@ -96,7 +115,7 @@ public class GPConfig {
 			//Print out for debugging in case we can't find the training data file
 			//  System.out.println("Working Directory = " +
 		    //          System.getProperty("user.dir"));
-			BufferedReader reader = new BufferedReader(new FileReader("data.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader("simple_data.txt"));
 			
 			
 			while ((line = reader.readLine()) != null) 

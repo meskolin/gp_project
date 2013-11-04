@@ -9,26 +9,36 @@ import java.util.Stack;
 public class FunctionEvaluator {
 	
 	private Tree m_bestFit;
+	private static double bestFitness = 10000;
 	
-	public boolean evaluate(List<String> postOrderList, int xValue, double yvalueOUT)
+	public Tree getBestTree()
 	{
-		
-		Stack<Integer> st = new Stack<Integer>();
-		
+		return m_bestFit;
+	}
+	
+	public double getBestFitness()
+	{
+		return bestFitness;
+	}
+	
+	public EvaluationResult evaluate(List<String> postOrderList, int xValue)
+	{
+		EvaluationResult result = new EvaluationResult();
+		Stack<Double> st = new Stack<Double>();
 		for (String nodeValue : postOrderList)
 		{
 			if (isInteger(nodeValue))
 			{
-				st.push(Integer.parseInt(nodeValue));
+				st.push((double)Integer.parseInt(nodeValue));
 			}
 			else if (isVariable(nodeValue))
 			{
-				st.push(xValue);
+				st.push((double)xValue);
 			}
 			else 
 			{
-				int num1 =  st.pop();
-				int num2 =  st.pop();
+				double num1 =  st.pop();
+				double num2 =  st.pop();
 				
 				switch(getOperator(nodeValue))
 				{
@@ -39,14 +49,14 @@ public class FunctionEvaluator {
 					st.push(num1 * num2);
 					break;
 				case DIVIDE:
-					if(num2 == 0)
+					if(num1 == 0)
 					{
-						return false;
+						result.isValid = false;
 					}
-					st.push(num1 / num2);
+					st.push(num2 / num1);
 					break;
 				case SUBTRACT:
-					st.push(num1 - num2);
+					st.push(num2 - num1);
 					break;
 				default:
 					throw new IllegalArgumentException("Invalid Operator");
@@ -55,29 +65,36 @@ public class FunctionEvaluator {
 			}
 		}
 		
-		yvalueOUT = st.pop();
-		return true;
+		result.yValue =  st.pop(); 
+		return result;
 	}
 	
 	//return true to continue, false if tree is found
 	public boolean evaluatePop(Population pop)
 	{
 		FunctionCompare comp = new FunctionCompare();
-		double fitness = -1;
+		
 		boolean isValid = true;
 		
 		List<Tree> list= pop.getTrees();
 		for (Iterator<Tree> iter = list.iterator(); iter.hasNext(); )
 		{
 			Tree func = iter.next();
-			isValid = comp.getFitnessValue(func, fitness);
-			if(isValid)
+			FitnessResult fitResult = comp.getFitnessValue(func);
+			if(fitResult.isValid)
 			{
-				if (fitness == 0)
+				if (fitResult.fitnessValue < bestFitness)
+				{
+					bestFitness = fitResult.fitnessValue ;
+					System.out.println("New low fitness value: " + bestFitness);
+					func.printTree();
+					m_bestFit = func;
+				}
+				if (fitResult.fitnessValue  == 0)
 				{
 					System.out.println("----Found best fit tree--------");
 					func.printTree();
-					m_bestFit = func;
+					
 					return false;
 				}	
 			}
@@ -90,32 +107,15 @@ public class FunctionEvaluator {
 		return true;
 		
 	}
-	
-	/* Todo not sure we need this. Maybe will just check for validity while doing evaluation
-	public void discardInvalid(Population pop)
-	{
-		List<Tree> list= pop.getTrees();
-		
-		for (Iterator<Tree> iter = list.iterator(); iter.hasNext(); ) {
-		    Tree tree = iter.next();
-		    
-		    if(!validateTree(tree))
-		    {
-		    	iter.remove();
-		    }
-		}
-	}*/
-	
-	public boolean evaluateFunction(Tree tree, int xValue, double yValueOUT)
+
+	public EvaluationResult evaluateFunction(Tree tree, int xValue)
 	{	
 		List<String> postOrderList = new ArrayList<String>();
 		getPostOrderList(tree.getRootNode(),postOrderList);
 		
 		//System.out.println("evaluateFunction");
 		//System.out.println(Arrays.toString(postOrderList.toArray()));
-		
-		 return evaluate(postOrderList, xValue, yValueOUT); 
-		
+		return evaluate(postOrderList, xValue);
 	}
 	
 	void getPostOrderList(Node node, List<String> list)

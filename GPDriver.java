@@ -33,21 +33,25 @@ public class GPDriver {
 		
 		int numGenerations = 0;
 		
-		while(fEval.evaluatePop(pop) && numGenerations < 50)
+		boolean keepGoing = fEval.evaluatePop(pop);
+		while(keepGoing && numGenerations < 500)
 		{
-			System.out.println("num generation:" + numGenerations);
 			modifier.mutatePop(pop);
+			modifier.crossoverPop(pop);
 			numGenerations ++;
+			keepGoing = fEval.evaluatePop(pop);
 		}
 	
-		List<Tree> list = pop.getTrees();
-		for (Tree t : list)
-		{
-			List<String> postOrderList = new ArrayList<String>();
-			fEval.getPostOrderList(t.getRootNode(),postOrderList);
-			System.out.println(Arrays.toString(postOrderList.toArray()));
-			
-		}
+		//Print out the winning tree
+		System.out.println("Winning tree fitness value:" + fEval.getBestFitness());
+		Tree best = fEval.getBestTree();
+		//List<String> postOrderList = new ArrayList<String>();
+		//fEval.getPostOrderList(best.getRootNode(),postOrderList);
+		//System.out.println(Arrays.toString(postOrderList.toArray()));
+		
+		TreePrinter printer = new TreePrinter();
+		printer.printNode(best.getRootNode());
+		
 		
 	}
 

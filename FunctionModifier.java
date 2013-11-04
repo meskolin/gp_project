@@ -25,6 +25,24 @@ public class FunctionModifier {
 		
 	}
 	
+	public void crossoverPop(Population pop)
+	{
+		List<Tree> trees = pop.getTrees();
+		int numTrees = trees.size();
+		
+		double crossPercent = m_config.getCrossoverPercent();
+		long numToCross = Math.round(crossPercent*numTrees);
+		
+		System.out.println("crossing over " + numToCross + "trees");
+		for (int i=0; i< numToCross; i+=2)
+		{
+			int index1 = m_config.getRand().nextInt(numTrees);
+			int index2 = m_config.getRand().nextInt(numTrees);
+			crossOver(trees.get(index1),trees.get(index2));
+		}
+		
+	}
+	
 	public void mutate(Tree tree)
 	{
 		
@@ -37,14 +55,15 @@ public class FunctionModifier {
 		Random rnd = GPConfig.getInstance().getRand();
 		int index = rnd.nextInt(numNodes);
 		
-		Node node = allNodes.get(index); 
-		if (node.getNodeType() == NodeType.OPERAND)
+		Node randNode = allNodes.get(index); 
+		
+		if (randNode.getNodeType() == NodeType.OPERAND)
 		{
-			node.setData(m_config.getRandOperand());
+			randNode.setData(m_config.getRandOperand());
 		}
-		else if (node.getNodeType() == NodeType.OPERATOR)
+		else if (randNode.getNodeType() == NodeType.OPERATOR)
 		{
-			node.setData(m_config.getRandOperator());
+			randNode.setData(m_config.getRandOperator());
 		}
 		else
 		{
@@ -73,8 +92,8 @@ public class FunctionModifier {
 		
 		Node nodeT1Copy = new Node(nodeT1);
 		
-		System.out.println("------------Inserting this node into T2--------------");
-		nodeT1Copy.printNode();
+		//System.out.println("------------Inserting this node into T2--------------");
+		//nodeT1Copy.printNode();
 		
 		nodeT1.setData(nodeT2.getData());
 		nodeT1.setLeftNode(nodeT2.getLeftNode());
