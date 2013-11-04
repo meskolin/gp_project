@@ -16,7 +16,7 @@ public class FunctionModifier {
 		double mutatePercent = m_config.getMutatePercent();
 		long numToMutate = Math.round(mutatePercent*numTrees);
 		
-		System.out.println("mutating " + numToMutate + "trees");
+		//System.out.println("mutating " + numToMutate + "trees");
 		for (int i=0; i< numToMutate; i++)
 		{
 			int index = m_config.getRand().nextInt(numTrees);
@@ -33,7 +33,7 @@ public class FunctionModifier {
 		double crossPercent = m_config.getCrossoverPercent();
 		long numToCross = Math.round(crossPercent*numTrees);
 		
-		System.out.println("crossing over " + numToCross + "trees");
+		//System.out.println("crossing over " + numToCross + "trees");
 		for (int i=0; i< numToCross; i+=2)
 		{
 			int index1 = m_config.getRand().nextInt(numTrees);

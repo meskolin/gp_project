@@ -13,10 +13,13 @@ public class GPConfig {
 
 	private static GPConfig instance = null;
 
+	private static List<TrainingDataPair> m_trainingData;
+	
 	private Random m_rnd;
 	
 	protected GPConfig() {
 		 m_rnd = new Random(System.currentTimeMillis());
+		 m_trainingData = parseTrainingData();
 	}
 
 	public static GPConfig getInstance() {
@@ -39,22 +42,27 @@ public class GPConfig {
 	public int getSizePopulation()
 	{
 		//todo read from config
-		return 30;
+		return 100;
 		
 	}
 	
 	public double getMutatePercent()
 	{
-		double mutatePercent = 0.5; //todo read from config
+		double mutatePercent = 0.2; //todo read from config
 		return mutatePercent; 
 	}
 	
 	public double getCrossoverPercent()
 	{
-		double crossPercent = 0.5; //todo read from config
+		double crossPercent = 0.3; //todo read from config
 		return crossPercent; 
 	}
 	
+	public double getPrunePercent()
+	{
+		double prunePercent = 0.2 ; // todo read from config
+		return prunePercent;
+	}
 	public String getRandOperator() {
 		if (m_rnd != null) {
 			
@@ -104,7 +112,12 @@ public class GPConfig {
 		}
 	}
 	
-	List<TrainingDataPair> getTrainingData()
+	public List<TrainingDataPair> getTrainingData()
+	{
+		return m_trainingData;
+	}
+	
+	private List<TrainingDataPair> parseTrainingData()
 	{
 		
 		List<TrainingDataPair> list = new LinkedList<TrainingDataPair>();

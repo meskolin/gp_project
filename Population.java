@@ -1,5 +1,7 @@
 package gp_project;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +29,26 @@ public class Population {
 			
 		}
 		
+		
+	}
+	
+	public void pruneLowFitnessTrees()
+	{
+		//Sort trees in order with High Error (low fitness) first
+		Collections.sort(m_functions);
+		
+		double percentToPrune = GPConfig.getInstance().getPrunePercent();
+		long numToPrune = Math.round(percentToPrune * m_functions.size());
+		
+		Iterator<Tree> iter = m_functions.iterator();
+		int deleted = 0;
+		
+		while(iter.hasNext() && (numToPrune > deleted))
+		{
+			iter.next();
+			iter.remove();			
+			deleted ++;
+		}
 		
 	}
 	

@@ -1,6 +1,7 @@
 package gp_project;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -86,8 +87,8 @@ public class FunctionEvaluator {
 				if (fitResult.fitnessValue < bestFitness)
 				{
 					bestFitness = fitResult.fitnessValue ;
-					System.out.println("New low fitness value: " + bestFitness);
-					func.printTree();
+					//System.out.println("New low fitness value: " + bestFitness);
+					//func.printTree();
 					m_bestFit = func;
 				}
 				if (fitResult.fitnessValue  == 0)
@@ -104,6 +105,7 @@ public class FunctionEvaluator {
 			}
 			
 		}
+		
 		return true;
 		
 	}

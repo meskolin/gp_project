@@ -31,6 +31,7 @@ public class FunctionCompare {
 				fitness += diff;
 		}
 
+		tree.setFitnessValue(fitness);
 		result.fitnessValue = fitness;
 		
 		return result;

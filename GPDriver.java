@@ -13,21 +13,6 @@ public class GPDriver {
 		Population pop = new Population();
 		pop.generateFirstPopulation();
 		
-		/* Pseudocode
-		while(!Found)
-		{
-			pop.mutateSome();
-			pop.crossoverSome();
-			eval.evaluateFitness(pop);
-			if eval.getBestFitness() < desiredValue
-			{
-				found = true;
-				print bestTree
-			}
-			
-		}*/
-		
-		
 		FunctionEvaluator fEval = new FunctionEvaluator();
 		FunctionModifier modifier = new FunctionModifier();
 		
@@ -38,17 +23,16 @@ public class GPDriver {
 		{
 			modifier.mutatePop(pop);
 			modifier.crossoverPop(pop);
+			pop.regenerate();
 			numGenerations ++;
 			keepGoing = fEval.evaluatePop(pop);
+			pop.pruneLowFitnessTrees();
 		}
 	
 		//Print out the winning tree
-		System.out.println("Winning tree fitness value:" + fEval.getBestFitness());
-		Tree best = fEval.getBestTree();
-		//List<String> postOrderList = new ArrayList<String>();
-		//fEval.getPostOrderList(best.getRootNode(),postOrderList);
-		//System.out.println(Arrays.toString(postOrderList.toArray()));
 		
+		System.out.println("Winning tree fitness value:" + fEval.getBestFitness());
+		Tree best = fEval.getBestTree();		
 		TreePrinter printer = new TreePrinter();
 		printer.printNode(best.getRootNode());
 		
