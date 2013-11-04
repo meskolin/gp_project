@@ -36,7 +36,7 @@ public class GPConfig {
 
 	public int getMaxDepth()
 	{
-		return 1;
+		return 3;
 	}
 	
 	public int getSizePopulation()
@@ -70,7 +70,7 @@ public class GPConfig {
 			List<String> operators = Arrays.asList("-", "/", "*");
 			int numOperators = operators.size();
 	
-			int index = m_rnd.nextInt(numOperators - 1);
+			int index = m_rnd.nextInt(numOperators);
 	
 
 			if (index < 0 || index >= numOperators) {
