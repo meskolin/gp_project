@@ -7,6 +7,7 @@ import java.util.List;
 
 public class GPDriver {
 
+	
 	public static void main(String[] Args) {
 		
 	
@@ -19,7 +20,7 @@ public class GPDriver {
 		int numGenerations = 0;
 		
 		boolean keepGoing = fEval.evaluatePop(pop);
-		while(keepGoing && numGenerations < 500)
+		while(keepGoing && numGenerations < 2000)
 		{
 			modifier.mutatePop(pop);
 			modifier.crossoverPop(pop);

@@ -38,6 +38,10 @@ public class FunctionEvaluator {
 			}
 			else 
 			{
+				if(st.size() < 2)
+				{
+					throw new IllegalArgumentException("Invalid Tree encountered");
+				}
 				double num1 =  st.pop();
 				double num2 =  st.pop();
 				
@@ -64,6 +68,11 @@ public class FunctionEvaluator {
 				}				
 			
 			}
+		}
+		
+		if (st.size()> 1)
+		{
+			throw new IllegalArgumentException("Invalid Tree encountered");
 		}
 		
 		result.yValue =  st.pop(); 

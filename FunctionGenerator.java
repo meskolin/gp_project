@@ -50,21 +50,47 @@ public class FunctionGenerator {
 			throw new IllegalArgumentException("INVALID");
 
 		}
-
-		if (currentD == maxD) {
+		
+		if (node.getNodeType() == NodeType.OPERAND)
+		{
+			return;
+		}
+		else if (currentD == maxD) {
 			node.setRightNode(new Node(config.getRandOperand(), NodeType.OPERAND));
 			node.setLeftNode(new Node(config.getRandOperand(), NodeType.OPERAND));
 			return;
 		} 
 		else if (node.getNodeType() == NodeType.OPERATOR) 
 		{
-			node.setRightNode(new Node(config.getRandOperatorOrOperand(), NodeType.OPERATOR));
-			node.setLeftNode(new Node(config.getRandOperatorOrOperand(),NodeType.OPERATOR));
+			int randNum = GPConfig.getInstance().getRand().nextInt(2);			
+			
+			//Pick Random number for Right Node
+			if (randNum == 1)
+			{
+				node.setRightNode(new Node(config.getRandOperator(), NodeType.OPERATOR));
+			}
+			else
+			{
+				node.setRightNode(new Node(config.getRandOperand(), NodeType.OPERAND));
+			}
+			
+			//Pick Random number for Left Node
+			randNum = GPConfig.getInstance().getRand().nextInt(2);
+			if (randNum == 1)
+			{
+				node.setLeftNode(new Node(config.getRandOperator(),NodeType.OPERATOR));
+			}
+			else
+			{
+				node.setLeftNode(new Node(config.getRandOperand(),NodeType.OPERAND));
+			}
+		
 		}
-		else if (node.getNodeType() == NodeType.OPERAND)
+		else
 		{
-			return;
+			throw new IllegalArgumentException("Invalid Tree encountered during grow method");
 		}
+		
 
 
 		addChildrenGrowMethod(node.getRightNode(), currentD + 1, maxD);
