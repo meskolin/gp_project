@@ -1,10 +1,10 @@
 package gp_project;
 
-import java.util.LinkedList;
+
 import java.util.Random;
 import java.util.List;
+import java.util.LinkedList;
 import java.util.Arrays;
-import java.util.logging.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -122,13 +122,13 @@ public class GPConfig {
 		
 		List<TrainingDataPair> list = new LinkedList<TrainingDataPair>();
 		String line = null;
-		
+		BufferedReader reader;
 		try
 		{
 			//Print out for debugging in case we can't find the training data file
 			//  System.out.println("Working Directory = " +
 		    //          System.getProperty("user.dir"));
-			BufferedReader reader = new BufferedReader(new FileReader("simple_data.txt"));
+			 reader = new BufferedReader(new FileReader("simple_data.txt"));
 			
 			
 			while ((line = reader.readLine()) != null) 
@@ -137,6 +137,7 @@ public class GPConfig {
 				String[] parts = line.split("\\s");
 				if(parts.length != 2)
 				{
+					reader.close();
 					throw new RuntimeException("Unexpected characters found in training data file");
 				}
 							
@@ -144,11 +145,14 @@ public class GPConfig {
 				pair.setyValue(Double.parseDouble(parts[1]));
 				list.add(pair);
 			}
+			reader.close();
 		}
 		catch(IOException ex)
 		{
 			System.out.println(ex);
 			System.out.println("Exception during training data file read");
+		
+
 		}
 		return list;
 	}

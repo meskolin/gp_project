@@ -1,10 +1,5 @@
 package gp_project;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.*;
-import java.util.List;
-
 public class GPDriver {
 
 	

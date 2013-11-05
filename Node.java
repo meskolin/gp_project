@@ -1,12 +1,7 @@
 package gp_project;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.*;
-
 public class Node {
 	private String m_data; // root data
-	private Node m_parent;
 	private Node m_rightNode;
 	private Node m_leftNode;
 	private NodeType m_type;

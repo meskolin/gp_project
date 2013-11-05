@@ -1,7 +1,5 @@
 package gp_project;
 
-import java.util.logging.*;
-
 public class FunctionGenerator {
 
 	public Tree GenerateFullTree(int maxDepth) {

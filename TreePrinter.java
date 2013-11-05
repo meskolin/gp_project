@@ -7,7 +7,7 @@ import java.util.List;
 
 class TreePrinter {
 
-    public static void printNode(Node root) {
+    public void printNode(Node root) {
         int maxLevel = TreePrinter.maxLevel(root);
 
         printNodeInternal(Collections.singletonList(root), 1, maxLevel);

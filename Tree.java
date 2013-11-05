@@ -1,9 +1,5 @@
 package gp_project;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.*;
-
 public class Tree implements Comparable<Tree>{
 
 	private Node m_rootNode;

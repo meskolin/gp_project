@@ -1,7 +1,5 @@
 package gp_project;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
@@ -83,8 +81,6 @@ public class FunctionEvaluator {
 	public boolean evaluatePop(Population pop)
 	{
 		FunctionCompare comp = new FunctionCompare();
-		
-		boolean isValid = true;
 		
 		List<Tree> list= pop.getTrees();
 		for (Iterator<Tree> iter = list.iterator(); iter.hasNext(); )
