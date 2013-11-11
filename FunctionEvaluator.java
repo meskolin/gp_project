@@ -99,7 +99,6 @@ public class FunctionEvaluator {
 				if (fitResult.fitnessValue  == 0)
 				{
 					System.out.println("----Found best fit tree--------");
-					func.printTree();
 					
 					return false;
 				}	

@@ -37,8 +37,8 @@ public class Population {
 		//Sort trees in order with High Error (low fitness) first
 		Collections.sort(m_functions);
 		
-		double percentToPrune = GPConfig.getInstance().getPrunePercent();
-		long numToPrune = Math.round(percentToPrune * m_functions.size());
+		double percentToEliminate = GPConfig.getInstance().getEliminatePercent();
+		long numToPrune = Math.round(percentToEliminate * m_functions.size());
 		
 		Iterator<Tree> iter = m_functions.iterator();
 		int deleted = 0;

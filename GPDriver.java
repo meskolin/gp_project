@@ -26,7 +26,7 @@ public class GPDriver {
 		}
 	
 		//Print out the winning tree
-		
+		System.out.println("Found tree in " + numGenerations + " generations");
 		System.out.println("Winning tree fitness value:" + fEval.getBestFitness());
 		Tree best = fEval.getBestTree();		
 		TreePrinter printer = new TreePrinter();

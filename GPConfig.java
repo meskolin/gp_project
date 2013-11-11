@@ -17,9 +17,12 @@ public class GPConfig {
 	
 	private Random m_rnd;
 	
+	private Settings m_settings;
+	
 	protected GPConfig() {
 		 m_rnd = new Random(System.currentTimeMillis());
 		 m_trainingData = parseTrainingData();
+		 m_settings = new Settings();
 	}
 
 	public static GPConfig getInstance() {
@@ -36,32 +39,28 @@ public class GPConfig {
 
 	public int getMaxDepth()
 	{
-		return 3;
+		return m_settings.getMaxDepth();
 	}
 	
 	public int getSizePopulation()
 	{
-		//todo read from config
-		return 100;
+		return m_settings.getPopulationSize();
 		
 	}
 	
 	public double getMutatePercent()
 	{
-		double mutatePercent = 0.2; //todo read from config
-		return mutatePercent; 
+		return m_settings.getMutatePercent();
 	}
 	
 	public double getCrossoverPercent()
 	{
-		double crossPercent = 0.3; //todo read from config
-		return crossPercent; 
+		return m_settings.getCrossoverPercent();
 	}
 	
-	public double getPrunePercent()
+	public double getEliminatePercent()
 	{
-		double prunePercent = 0.2 ; // todo read from config
-		return prunePercent;
+		return m_settings.getEliminatePercent();
 	}
 	public String getRandOperator() {
 		if (m_rnd != null) {
@@ -128,7 +127,7 @@ public class GPConfig {
 			//Print out for debugging in case we can't find the training data file
 			//  System.out.println("Working Directory = " +
 		    //          System.getProperty("user.dir"));
-			 reader = new BufferedReader(new FileReader("simple_data.txt"));
+			 reader = new BufferedReader(new FileReader("data.txt"));
 			
 			
 			while ((line = reader.readLine()) != null) 
@@ -156,4 +155,5 @@ public class GPConfig {
 		}
 		return list;
 	}
+	
 }

@@ -18,8 +18,6 @@ public class Tree implements Comparable<Tree>{
 	}
 
 	public void printTree() {
-		System.out.println("---------Tree---------\n");
-
 		m_rootNode.printNode();
 	}
 
