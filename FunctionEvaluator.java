@@ -10,6 +10,38 @@ public class FunctionEvaluator {
 	private Tree m_bestFit;
 	private static double bestFitness = 10000;
 	
+	FitnessResult getFitnessValue(Tree tree)
+	{
+		FitnessResult result = new FitnessResult();
+		GPConfig config = GPConfig.getInstance();
+		List<TrainingDataPair> tdList = config.getTrainingData();
+		/*
+		for each point in training data, evaluate function at that point and find the difference. Sum the differences to get the overall fitness
+		*/ 
+		double fitness = 0;
+		
+		
+		/*
+		 *  Todo possibly reconsider this behavior. May not want to throw out the whole function just
+		 *  because one evaluation involved division by zero. Will NEED to reconsider if the prof asks us to find y = 1/x
+		 */
+		for (TrainingDataPair pair : tdList)
+		{	
+				EvaluationResult evalResult = evaluateFunction(tree, pair.getxValue());
+				if(!evalResult.isValid)
+				{
+					result.isValid = false;
+				}
+				double diff = Math.abs(evalResult.yValue - pair.getyValue());
+				fitness += diff;
+		}
+
+		tree.setFitnessValue(fitness);
+		result.fitnessValue = fitness;
+		
+		return result;
+	}
+	
 	public Tree getBestTree()
 	{
 		return m_bestFit;
@@ -80,13 +112,11 @@ public class FunctionEvaluator {
 	//return true to continue, false if tree is found
 	public boolean evaluatePop(Population pop)
 	{
-		FunctionCompare comp = new FunctionCompare();
-		
 		List<Tree> list= pop.getTrees();
 		for (Iterator<Tree> iter = list.iterator(); iter.hasNext(); )
 		{
 			Tree func = iter.next();
-			FitnessResult fitResult = comp.getFitnessValue(func);
+			FitnessResult fitResult = getFitnessValue(func);
 			if(fitResult.isValid)
 			{
 				if (fitResult.fitnessValue < bestFitness)

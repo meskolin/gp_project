@@ -4,7 +4,6 @@ package gp_project;
 import java.util.Random;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -62,15 +61,14 @@ public class GPConfig {
 	{
 		return m_settings.getEliminatePercent();
 	}
+
 	public String getRandOperator() {
+
 		if (m_rnd != null) {
-			
-			// todo read this in
-			List<String> operators = Arrays.asList("-", "/", "*");
+			List<String> operators = m_settings.getOperators();
 			int numOperators = operators.size();
-	
+
 			int index = m_rnd.nextInt(numOperators);
-	
 
 			if (index < 0 || index >= numOperators) {
 				throw new IllegalArgumentException("INVALID");
@@ -78,23 +76,27 @@ public class GPConfig {
 
 			String oper = operators.get(index);
 			return oper;
+		} else {
+			throw new RuntimeException(
+					"Internal error: random number seed not initialized");
 		}
-
-		return "0";
 	}
 
 	public String getRandOperand() {
-		// todo read this in
+		if (m_rnd != null) {
+			List<String> operands = m_settings.getOperands();
+			int numoperands = operands.size();
+			int index = m_rnd.nextInt(numoperands);
 
-		List<String> operands = Arrays.asList("1", "2", "x");
-		int numoperands = operands.size();
-		int index = m_rnd.nextInt(numoperands);
-		
-		if (index < 0 || index >= numoperands) {
-			throw new IllegalArgumentException("INVALID");
+			if (index < 0 || index >= numoperands) {
+				throw new IllegalArgumentException("INVALID");
+			}
+
+			return operands.get(index);
+		} else {
+			throw new RuntimeException(
+					"Internal error: random number seed not initialized");
 		}
-		
-		return operands.get(index);
 	}
 	
 	public String getRandOperatorOrOperand()

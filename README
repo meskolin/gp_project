@@ -1,3 +1,0 @@
-Todo tasks:
-Currently runs for a set number of generations. Change this to be based off time (15 minutes) instead
-Currently doesn't read from a configuration file, which will be needed for testing. Change this in GPConfig.java 

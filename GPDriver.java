@@ -1,5 +1,7 @@
 package gp_project;
 
+import java.util.concurrent.TimeUnit;
+
 public class GPDriver {
 
 	
@@ -15,7 +17,10 @@ public class GPDriver {
 		int numGenerations = 0;
 		
 		boolean keepGoing = fEval.evaluatePop(pop);
-		while(keepGoing && numGenerations < 2000)
+		
+		long stop=System.nanoTime()+TimeUnit.MINUTES.toNanos(15);
+			
+		while(keepGoing && stop> System.nanoTime())
 		{
 			modifier.mutatePop(pop);
 			modifier.crossoverPop(pop);
