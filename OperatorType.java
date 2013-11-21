@@ -1,5 +1,5 @@
 package gp_project;
 
 public enum OperatorType {
-ADD, SUBTRACT, MULTIPLY, DIVIDE
+	ADD, DIVIDE, MULTIPLY, SUBTRACT
 }

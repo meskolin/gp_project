@@ -7,10 +7,20 @@ import java.util.List;
 
 class TreePrinter {
 
-    public void printNode(Node root) {
-        int maxLevel = TreePrinter.maxLevel(root);
+    private static boolean isAllElementsNull(List<Node> list) {
+        for (Object object : list) {
+            if (object != null)
+                return false;
+        }
 
-        printNodeInternal(Collections.singletonList(root), 1, maxLevel);
+        return true;
+    }
+
+    private static int maxLevel(Node node) {
+        if (node == null)
+            return 0;
+
+        return Math.max(TreePrinter.maxLevel(node.getLeftNode()), TreePrinter.maxLevel(node.getRightNode())) + 1;
     }
 
     private static void printNodeInternal(List<Node> nodes, int level, int maxLevel) {
@@ -74,20 +84,10 @@ class TreePrinter {
             System.out.print(" ");
     }
 
-    private static int maxLevel(Node node) {
-        if (node == null)
-            return 0;
+    public void printNode(Node root) {
+        int maxLevel = TreePrinter.maxLevel(root);
 
-        return Math.max(TreePrinter.maxLevel(node.getLeftNode()), TreePrinter.maxLevel(node.getRightNode())) + 1;
-    }
-
-    private static boolean isAllElementsNull(List<Node> list) {
-        for (Object object : list) {
-            if (object != null)
-                return false;
-        }
-
-        return true;
+        printNodeInternal(Collections.singletonList(root), 1, maxLevel);
     }
 
 }
