@@ -46,7 +46,14 @@ public class FunctionModifier {
 
 	}
 
+	/**
+	 * Crossover a certain percentage of trees in the specified population
+	 * 
+	 * @param pop
+	 */
 	public void crossoverPop(Population pop) {
+		
+		
 		List<Tree> trees = pop.getTrees();
 		int numTrees = trees.size();
 
@@ -62,6 +69,12 @@ public class FunctionModifier {
 
 	}
 
+	
+	/**
+	 * Mutates a single tree
+	 * 
+	 * @param tree
+	 */
 	public void mutate(Tree tree) {
 
 		FunctionEvaluator eval = new FunctionEvaluator();
@@ -84,6 +97,11 @@ public class FunctionModifier {
 		}
 	}
 
+	/**
+	 * Mutates a percentage of trees in specified population
+	 * 
+	 * @param pop
+	 */
 	public void mutatePop(Population pop) {
 		List<Tree> trees = pop.getTrees();
 		int numTrees = trees.size();
