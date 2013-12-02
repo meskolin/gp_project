@@ -7,7 +7,12 @@ import java.util.Stack;
 
 public class FunctionEvaluator {
 
-	private static double bestFitness = 10000;
+	private static double overallBestFitness = 10000;
+	private static double generationbestFitness = 10000;
+	
+	public static double getGenerationbestFitness() {
+		return generationbestFitness;
+	}
 
 	/**
 	 * Parses out the operator type from a string and returns an enumerated type
@@ -160,13 +165,15 @@ public class FunctionEvaluator {
 			Tree func = iter.next();
 			FitnessResult fitResult = getFitnessValue(func);
 			if (fitResult.isValid) {
-				if (fitResult.fitnessValue < bestFitness) {
-					bestFitness = fitResult.fitnessValue;
-					// System.out.println("New low fitness value: " +
-					// bestFitness);
-					// func.printTree();
+				
+				if (fitResult.fitnessValue < generationbestFitness) {
+					generationbestFitness = fitResult.fitnessValue;
+				}				
+				if (fitResult.fitnessValue < overallBestFitness) {
+					overallBestFitness = fitResult.fitnessValue;
 					m_bestFit = func;
 				}
+				
 				if (fitResult.fitnessValue == 0) //If the function we need to find is a more complex polynomial, consider changing this to something greater than zero 
 				{
 					System.out.println("----Found best fit tree--------");
@@ -184,7 +191,7 @@ public class FunctionEvaluator {
 	}
 
 	public double getBestFitness() {
-		return bestFitness;
+		return overallBestFitness;
 	}
 
 	public Tree getBestTree() {
@@ -261,5 +268,26 @@ public class FunctionEvaluator {
 		getPostOrderNodeList(node.getRightNode(), list);
 
 		list.add(node);
+	}
+	
+	
+	public void getInOrderNodeList(Node node,  List<String> list) {
+		if (node == null)
+			return;
+
+		boolean useParen = false;
+		if ((node.getLeftNode() != null) && (node.getRightNode() != null))
+		useParen = true;
+		
+		if(useParen)
+		list.add("(");
+		
+		getInOrderNodeList(node.getLeftNode(), list);
+		list.add(node.getData());
+		getInOrderNodeList(node.getRightNode(), list);
+		
+		if(useParen)
+		list.add(")");
+		
 	}
 }
