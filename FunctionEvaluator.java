@@ -85,17 +85,17 @@ public class FunctionEvaluator {
 	 * Evaluate a function at a particular x value and return the y value (EvaluationResult class stores y value) 
 	 * 
 	 * @param postOrderList - List of operators and operands already parse in post order method
-	 * @param xValue - value at which to evaluate the tree
+	 * @param d - value at which to evaluate the tree
 	 * @return -result of evaluation. If evaluation involved division by zero, the result is invalid (EvaluationResult member variable isValid set to false)
 	 */
-	public EvaluationResult evaluate(List<String> postOrderList, int xValue) {
+	public EvaluationResult evaluate(List<String> postOrderList, double d) {
 		EvaluationResult result = new EvaluationResult();
 		Stack<Double> st = new Stack<Double>();
 		for (String nodeValue : postOrderList) {
 			if (isInteger(nodeValue)) {
 				st.push((double) Integer.parseInt(nodeValue));
 			} else if (isVariable(nodeValue)) {
-				st.push((double) xValue);
+				st.push((double) d);
 			} else {
 				if (st.size() < 2) {
 					throw new IllegalArgumentException(
@@ -138,16 +138,16 @@ public class FunctionEvaluator {
 	 * Evaluate a function at a particular x value and return the y value (EvaluationResult class stores y value) 
 	 * 
 	 * @param tree - Tree to evaluate
-	 * @param xValue - value at which to evaluate the tree
+	 * @param d - value at which to evaluate the tree
 	 * @return -result of evaluation. If evaluation involved division by zero, the result is invalid (EvaluationResult member variable isValid set to false)
 	 */
-	public EvaluationResult evaluateFunction(Tree tree, int xValue) {
+	public EvaluationResult evaluateFunction(Tree tree, double d) {
 		List<String> postOrderList = new ArrayList<String>();
 		getPostOrderList(tree.getRootNode(), postOrderList);
 
 		// System.out.println("evaluateFunction");
 		// System.out.println(Arrays.toString(postOrderList.toArray()));
-		return evaluate(postOrderList, xValue);
+		return evaluate(postOrderList, d);
 	}
 
 
@@ -160,6 +160,7 @@ public class FunctionEvaluator {
 	 * @return return true to continue, false if tree is found
 	 */
 	public boolean evaluatePop(Population pop) {
+		generationbestFitness = 100000;
 		List<Tree> list = pop.getTrees();
 		for (Iterator<Tree> iter = list.iterator(); iter.hasNext();) {
 			Tree func = iter.next();
@@ -241,7 +242,7 @@ public class FunctionEvaluator {
 	 * @param node
 	 * @param list
 	 */
-	void getPostOrderList(Node node, List<String> list) {
+	public void getPostOrderList(Node node, List<String> list) {
 		if (node == null)
 			return;
 

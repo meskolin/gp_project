@@ -127,7 +127,7 @@ public class GPConfig {
 							"Unexpected characters found in training data file");
 				}
 
-				pair.setxValue(Integer.parseInt(parts[0]));
+				pair.setxValue(Double.parseDouble(parts[0]));
 				pair.setyValue(Double.parseDouble(parts[1]));
 				list.add(pair);
 			}

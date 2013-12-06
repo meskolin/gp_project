@@ -41,14 +41,14 @@ public class GPDriver {
 				+ fEval.getBestFitness());
 		Tree best = fEval.getBestTree();
 		
-		System.out.println("--------------------------------------Function tree------------------------------");
+		System.out.println("--------------------------------Function tree--------------------------------");
 		TreePrinter printer = new TreePrinter();
 		printer.printNode(best.getRootNode());
 		
 		List<String> list = new LinkedList<String>();
 		fEval.getInOrderNodeList(best.getRootNode(),list);
 
-		System.out.println("------------------------------------Simplified tree------------------------------");
+		System.out.println("--------------------------------Simplified tree------------------------------");
 		for (String str : list)
 		{
 			System.out.print(str);

@@ -2,11 +2,11 @@ package gp_project;
 
 public class TrainingDataPair {
 
-	private int xValue;
+	private double xValue;
 
 	private double yValue;
 
-	public int getxValue() {
+	public double getxValue() {
 		return xValue;
 	}
 
@@ -14,8 +14,8 @@ public class TrainingDataPair {
 		return yValue;
 	}
 
-	public void setxValue(int xValue) {
-		this.xValue = xValue;
+	public void setxValue(double d) {
+		this.xValue = d;
 	}
 
 	public void setyValue(double yValue) {
